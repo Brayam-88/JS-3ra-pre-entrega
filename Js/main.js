@@ -21,6 +21,10 @@ arrayProducto =[termoPink,botellaDeportiva,balanzaDigital,botellaDeportiva2,bote
 
 let carrito = [];
 
+if(localStorage.getItem("carrito")){
+    carrito = JSON.parse(localStorage.getItem("carrito"));
+}
+
 const contenedorProductos = document.getElementById("contenedorCarrito");
 
 const verProductos = () => {
@@ -68,6 +72,7 @@ const agregarAlCarrito = (id) =>{
         carrito.push(productos);
     }
     sumarCompra();
+    localStorage.setItem("carrito",JSON.stringify(carrito));
 };
 
 const contenedorCarrito = document.getElementById("contenedorCarrito");
@@ -99,15 +104,19 @@ const contenedorCarro = () => {
                         `
         contenedorCarrito.appendChild(card);
 
-
-
          const botonEliminar = document.getElementById(`eliminarDelCarrito${productos.id}`);
          botonEliminar.addEventListener("click", () =>{
          eliminarDelCarrito(productos.id);
-
         })
     })
     sumarCompra();
+
+    const aumentarProductos =(id)=>{
+        const productos = carrito.find((productos) => productos.id === id);
+        productos.cantidad ++;
+        localStorage.setItem("carrito",json.stringify(carrito));
+        totalCompra();
+    }
 
 }
 
@@ -116,6 +125,7 @@ const eliminarDelCarrito = (id) =>{
     const indice = carrito.indexOf(productos);
     carrito.splice(indice, 1);
     contenedorCarro();
+    localStorage.setItem("carrito",JSON.stringify(carrito));
 }
 
 const totalCompra = document.getElementById("totalCompra");
@@ -128,5 +138,39 @@ const sumarCompra = () =>{
     totalCompra.innerHTML = `${total}`;
 
 }
+
+const vaciarCarrito = document.getElementById("vaciarCarrito");
+
+vaciarCarrito.addEventListener("click", () => {
+    vaciarTotalidad();
+})
+
+const vaciarTotalidad = () => {
+    carrito = [];
+    contenedorCarro();
+
+    localStorage.clear
+
+}
+
+
+    const comentarios = document.getElementById("comentarios");
+    const listaComentarios = "json/productos.json";
+
+    fetch(listaComentarios)
+    .then(respuesta => respuesta.json())
+    .then(datos =>{
+        datos.forEach(productos =>{
+            comentarios.innerHTML +=`
+                                    <h5>nombre: ${productos.nombre}</h5>
+                                    <p>comentarios: ${productos.testimonio}</p>
+                                    <p> id :${productos.id}</p>
+                                    `
+        })
+        
+    })
+    .catch(error => console.log(error))
+    .finally(() => console.log("finalizacion comentarios"));
+
 
 
