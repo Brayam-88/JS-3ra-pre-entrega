@@ -10,6 +10,7 @@
 //     }
 
 // }
+
 const elementos= [{
     id:1,
     nombre:"termoPink",
@@ -159,3 +160,18 @@ function eliminarDelCarrito(producto){
 //         carrito.push(productos);
 //     }
 // }
+
+
+
+
+
+      
+    
+   
+    
+       
+
+        
+        
+    
+ 
