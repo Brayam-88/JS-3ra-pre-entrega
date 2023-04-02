@@ -98,25 +98,27 @@ const contenedorCarro = () => {
                                 <h5> ${productos.nombre}</h5>
                                 <p> ${productos.precio}</p>
                                 <p> ${productos.cantidad}</p>
-                                <button class = "btn btn-primary" id="eliminarDelCarrito${productos.id}">eliminar del carrito</button>
-                                <button id="disminuirProductos${productos.id}">-</button>
-                                <button id="aumentarProductos${productos.id}">+</button>
-                                </div>
-                            </div>
-                        `
                                 
+                                <button class = "btn btn-primary" id="disminuirProductos${productos.id}">-</button>
+                                <button class = "btn btn-primary" id="aumentarProductos${productos.id}">+</button>
+                                </div>
+                                <button class = "btn btn-danger" id="eliminarDelCarrito${productos.id}">Eliminar del carrito</button>
+                                
+                                
+                            </div>
 
-
-        
+                        
+                        `
+                        
         contenedorCarrito.appendChild(card);
 
         const aumentarProductos = document.getElementById(`aumentarProductos${productos.id}`);
          aumentarProductos.addEventListener("click",() =>{
-         aumentarProductos(productos.id)
+         aumentar(productos.id);
         })
          const disminuirProductos = document.getElementById(`disminuirProductos${productos.id}`);
          disminuirProductos.addEventListener("click", () =>{
-         eliminaCantidad(productos.id)
+         disminuir(productos.id);
         })
 
          const botonEliminar = document.getElementById(`eliminarDelCarrito${productos.id}`);
@@ -124,43 +126,61 @@ const contenedorCarro = () => {
          eliminarDelCarrito(productos.id);
         })
 
+        /* const finalizarCompra = document.getElementById(`finalizarCompra${productos.id}`)
+        finalizarCompra.addEventListener("click", () =>{
+            pedidoRealizado(productos.id);
+        }) */
+
+        
+
+        
+
     })
     
     sumarCompra();
+
+       
 }
-const aumentarProductos =(id)=>{
+
+/* const finalizarCompra =(id)=>{
+    const productos = carrito.find((productos) => productos.id === id)
+    contenedorCarro();
+} */
+
+const aumentar =(id)=>{
     const productos = carrito.find((productos) => productos.id === id);
     productos.cantidad ++;
-    localStorage.setItem("carrito",json.stringify(carrito));
-    contenedorCarrito();
+    contenedorCarro();
+    localStorage.setItem("carrito",JSON.stringify(carrito));
+    
+    
 }
-const disminuirProductos = (id)=>{
+const disminuir = (id)=>{
         const productos = carrito.find((productos) => productos.id === id);
         productos.cantidad --;
+        contenedorCarro();
         if(productos.cantidad === 0){
-            eliminarDelCarrito(id);
+            eliminarDelCarrito(id)
         }else{
             localStorage.setItem("carrito",JSON.stringify(carrito));
         } 
+        contenedorCarrito.addEventListener("click",()=>{
+         swal.fire("es para regalar, compralo no seas raton")
+        })
     }
-
     
-const eliminarDelCarrito = (id) =>{
-const productos = carrito.find(productos =>productos.id === id);
-const indice = carrito.indexOf(productos);
-carrito.splice(indice, 1);
-contenedorCarro();
-localStorage.setItem("carrito",JSON.stringify(carrito));
+        const eliminarDelCarrito = (id) =>{
+        const productos = carrito.find(productos =>productos.id === id);
+        const indice = carrito.indexOf(productos);
+        carrito.splice(indice, 1);
+        contenedorCarro();
+        localStorage.setItem("carrito",JSON.stringify(carrito));
+        
+        
+        } 
 
-
-}
-//contenedorCarrito.addEventListener("click",()=>{
-    swal.fire("es para regalar, compralo no seas raton")
-//})
-
-       
+        
 const totalCompra = document.getElementById("totalCompra");
-
 const sumarCompra = () =>{
     let total = 0;
     carrito.forEach(productos =>{
@@ -189,29 +209,8 @@ const vaciarTotalidad = () => {
     localStorage.clear();
 
 }
-      
 
-            
-    
-
-
-
- 
-      
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-    /* const comentarios = document.getElementById("comentarios");
+    const comentarios = document.getElementById("comentarios");
     const listaComentarios = "json/comentarios.json";
 
     fetch(listaComentarios)
@@ -219,20 +218,22 @@ const vaciarTotalidad = () => {
     .then(datos =>{
         datos.forEach(usuario =>{
             comentarios.innerHTML +=
-                                    `<div class="comentarios">
-                                        <h5>nombre: ${usuario.nombre}</h5>
-                                        <p>comentarios: ${usuario.testimonio}</p>
-            
+                                    `<div class="card mt-1 text-center">
+                                        <h5>${usuario.nombre}</h5>
+                                        <p>${usuario.testimonio}</p>
                                     <div/>
-                                    
-                                    
                                     `
-        })
-
-        
+            })
     })
     .catch(error => console.log(error))
-    .finally(() => console.log("finalizacion comentarios")); */
+    .finally(() => console.log("fin"));
+    
+    
+
+
+
+       
+
    
 
 
