@@ -126,26 +126,9 @@ const contenedorCarro = () => {
          eliminarDelCarrito(productos.id);
         })
 
-        /* const finalizarCompra = document.getElementById(`finalizarCompra${productos.id}`)
-        finalizarCompra.addEventListener("click", () =>{
-            pedidoRealizado(productos.id);
-        }) */
-
-        
-
-        
-
+        sumarCompra();
     })
-    
-    sumarCompra();
-
-       
-}
-
-/* const finalizarCompra =(id)=>{
-    const productos = carrito.find((productos) => productos.id === id)
-    contenedorCarro();
-} */
+        
 
 const aumentar =(id)=>{
     const productos = carrito.find((productos) => productos.id === id);
@@ -161,13 +144,13 @@ const disminuir = (id)=>{
         contenedorCarro();
         if(productos.cantidad === 0){
             eliminarDelCarrito(id)
+          
         }else{
             localStorage.setItem("carrito",JSON.stringify(carrito));
         } 
-        contenedorCarrito.addEventListener("click",()=>{
-         swal.fire("es para regalar, compralo no seas raton")
-        })
+          
     }
+}
     
         const eliminarDelCarrito = (id) =>{
         const productos = carrito.find(productos =>productos.id === id);
@@ -179,7 +162,6 @@ const disminuir = (id)=>{
         
         } 
 
-        
 const totalCompra = document.getElementById("totalCompra");
 const sumarCompra = () =>{
     let total = 0;
@@ -206,10 +188,27 @@ const vaciarTotalidad = () => {
     carrito = [];
     contenedorCarro();
 
-    localStorage.clear();
+    
 
 }
 
+carrito.forEach(() => {
+const finalizarCompra = document.createElement("button");
+finalizarCompra.classList.add("col-xl-3", "col-md-6","col-sm-12")
+})
+finalizarCompra.addEventListener("click", ()=>{
+    vaciarTotalidad();
+    localStorage.setItem("carrito",JSON.stringify(carrito));
+    localStorage.clear();
+
+})
+finalizarCompra.addEventListener("click",()=>{
+         swal.fire("Muchas Gracias por tu compra, tu pedido esta siendo procesado")
+         
+        })
+    
+    
+  
     const comentarios = document.getElementById("comentarios");
     const listaComentarios = "json/comentarios.json";
 
